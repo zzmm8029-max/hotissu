@@ -1,0 +1,49 @@
+import type {
+  BenefitCategory,
+  BenefitProvider,
+  ChecklistStage,
+  MerchantCategory,
+  PostCategory,
+} from "@/generated/prisma/enums";
+
+export const BENEFIT_CATEGORY_LABEL: Record<BenefitCategory, string> = {
+  MEDICAL: "의료/건강",
+  FINANCE: "현금성 지원",
+  TRANSPORT: "교통",
+  TAX: "세금/공과금",
+  EMPLOYMENT: "고용/육아휴직",
+  HOUSING: "주거",
+  ETC: "기타",
+};
+
+export const BENEFIT_PROVIDER_LABEL: Record<BenefitProvider, string> = {
+  CENTRAL_GOV: "중앙정부",
+  LOCAL_GOV: "지자체",
+  PUBLIC_ORG: "공공기관",
+  PRIVATE: "민간",
+};
+
+export const MERCHANT_CATEGORY_LABEL: Record<MerchantCategory, string> = {
+  HOSPITAL: "병원/산부인과",
+  PHARMACY: "약국",
+  MART: "마트/편의점",
+  CAFE_RESTAURANT: "카페/음식점",
+  TRANSPORT_FACILITY: "배려 시설",
+  BEAUTY: "뷰티/케어",
+  EDUCATION: "태교/교육",
+  ETC: "기타",
+};
+
+export const CHECKLIST_STAGE_LABEL: Record<ChecklistStage, string> = {
+  EARLY: "임신 초기 (1~12주)",
+  MID: "임신 중기 (13~27주)",
+  LATE: "임신 후기 (28주~출산)",
+  POSTPARTUM: "출산 후",
+};
+
+export const POST_CATEGORY_LABEL: Record<PostCategory, string> = {
+  REVIEW: "후기",
+  QUESTION: "질문",
+  INFO_SHARE: "정보 공유",
+  FREE: "자유",
+};
