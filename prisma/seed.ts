@@ -257,10 +257,10 @@ async function main() {
         district: "중구",
       },
       {
-        name: "포근한 카페 (수유실 운영)",
+        name: "포근한 카페 (유아 휴게실 운영)",
         category: "CAFE_RESTAURANT",
-        description: "매장 내 수유실 및 기저귀 교환대 운영",
-        benefitInfo: "수유실 무료 이용, 임산부 음료 10% 할인",
+        description: "매장 내 유아 휴게실(기저귀 교환대) 운영",
+        benefitInfo: "유아 휴게실 무료 이용, 임산부 음료 10% 할인",
         address: "서울특별시 서초구 서초대로 45",
         region: "서울특별시",
         district: "서초구",

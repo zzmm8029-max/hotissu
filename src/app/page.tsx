@@ -12,7 +12,7 @@ const FEATURES = [
     href: "/merchants",
     emoji: "🏬",
     title: "배려 가맹점",
-    description: "임산부 배려석, 전용 주차장, 수유실 등 배려 시설과 가맹점을 찾아봐요.",
+    description: "임산부 배려석, 전용 주차장, 유아 휴게실(기저귀 교환대) 등 배려 시설과 가맹점을 찾아봐요.",
   },
   {
     href: "/checklist",
