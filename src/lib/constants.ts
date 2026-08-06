@@ -1,4 +1,4 @@
-export const SITE_NAME = "로카인드";
+export const SITE_NAME = "가지";
 export const SITE_DESCRIPTION =
   "임산부를 위한 혜택·정책, 배려 가맹점, 신청 체크리스트, 커뮤니티를 한곳에서.";
 
