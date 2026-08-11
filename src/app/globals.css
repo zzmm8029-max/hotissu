@@ -10,6 +10,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* 가지 브랜드 컬러 (로고와 통일된 보라 계열) */
+  --color-brand-50: #f5f1fa;
+  --color-brand-100: #e9e2f1;
+  --color-brand-200: #c9b8de;
+  --color-brand-500: #6b4fa0;
+  --color-brand-600: #4a2e7a;
+  --color-brand-700: #382060;
 }
 
 @media (prefers-color-scheme: dark) {

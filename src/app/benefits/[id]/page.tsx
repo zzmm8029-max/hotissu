@@ -28,12 +28,12 @@ export default async function BenefitDetailPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <Link href="/benefits" className="text-sm font-medium text-rose-500 hover:underline">
+      <Link href="/benefits" className="text-sm font-medium text-brand-500 hover:underline">
         ← 혜택 목록으로
       </Link>
 
       <div className="mt-4 flex flex-wrap gap-1.5">
-        <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-600">
+        <span className="rounded-full bg-brand-100 px-2.5 py-0.5 text-xs font-medium text-brand-600">
           {BENEFIT_CATEGORY_LABEL[benefit.category]}
         </span>
         <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600">
@@ -82,7 +82,7 @@ export default async function BenefitDetailPage({
             href={benefit.applyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block rounded-full bg-rose-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-rose-600"
+            className="inline-block rounded-full bg-brand-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
           >
             신청 바로가기
           </a>

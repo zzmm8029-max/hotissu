@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -10,10 +11,10 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-rose-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
+    <header className="sticky top-0 z-50 border-b border-brand-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 text-lg font-bold text-rose-600">
-          <span aria-hidden>🤰</span>
+        <Link href="/" className="flex items-center gap-2 text-lg font-bold text-brand-600">
+          <Image src="/logo.webp" alt="" width={32} height={32} className="rounded-full" priority />
           {SITE_NAME}
         </Link>
 
@@ -26,8 +27,8 @@ export default function Header() {
                 href={link.href}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   active
-                    ? "bg-rose-500 text-white"
-                    : "text-neutral-600 hover:bg-rose-50 hover:text-rose-600"
+                    ? "bg-brand-500 text-white"
+                    : "text-neutral-600 hover:bg-brand-50 hover:text-brand-600"
                 }`}
               >
                 {link.label}
@@ -38,7 +39,7 @@ export default function Header() {
 
         <button
           type="button"
-          className="rounded-md p-2 text-neutral-600 hover:bg-rose-50 sm:hidden"
+          className="rounded-md p-2 text-neutral-600 hover:bg-brand-50 sm:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="메뉴 열기"
           aria-expanded={open}
@@ -50,7 +51,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-rose-100 px-4 py-3 sm:hidden">
+        <nav className="flex flex-col gap-1 border-t border-brand-100 px-4 py-3 sm:hidden">
           {NAV_LINKS.map((link) => {
             const active = pathname.startsWith(link.href);
             return (
@@ -60,8 +61,8 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className={`rounded-md px-3 py-2 text-sm font-medium ${
                   active
-                    ? "bg-rose-500 text-white"
-                    : "text-neutral-600 hover:bg-rose-50 hover:text-rose-600"
+                    ? "bg-brand-500 text-white"
+                    : "text-neutral-600 hover:bg-brand-50 hover:text-brand-600"
                 }`}
               >
                 {link.label}

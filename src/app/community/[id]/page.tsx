@@ -36,7 +36,7 @@ export default async function CommunityPostPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <Link href="/community" className="text-sm font-medium text-rose-500 hover:underline">
+      <Link href="/community" className="text-sm font-medium text-brand-500 hover:underline">
         ← 커뮤니티 목록으로
       </Link>
 
@@ -90,7 +90,7 @@ export default async function CommunityPostPage({
           />
           <button
             type="submit"
-            className="rounded-full bg-rose-500 px-5 py-2 text-sm font-semibold text-white hover:bg-rose-600"
+            className="rounded-full bg-brand-500 px-5 py-2 text-sm font-semibold text-white hover:bg-brand-600"
           >
             댓글 등록
           </button>

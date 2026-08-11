@@ -60,7 +60,7 @@ export default function NewCommunityPostPage() {
 
         <button
           type="submit"
-          className="rounded-full bg-rose-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-rose-600"
+          className="rounded-full bg-brand-500 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-600"
         >
           등록하기
         </button>

@@ -39,7 +39,7 @@ export default async function CommunityPage({
         <h1 className="text-2xl font-bold text-neutral-900">커뮤니티</h1>
         <Link
           href="/community/new"
-          className="rounded-full bg-rose-500 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-600"
+          className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-600"
         >
           글쓰기
         </Link>
@@ -55,8 +55,8 @@ export default async function CommunityPage({
             href={option.value === "ALL" ? "/community" : `/community?category=${option.value}`}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
               selected === option.value
-                ? "bg-rose-500 text-white"
-                : "border border-neutral-200 text-neutral-600 hover:bg-rose-50 hover:text-rose-600"
+                ? "bg-brand-500 text-white"
+                : "border border-neutral-200 text-neutral-600 hover:bg-brand-50 hover:text-brand-600"
             }`}
           >
             {option.label}
@@ -69,7 +69,7 @@ export default async function CommunityPage({
           <li key={post.id}>
             <Link
               href={`/community/${post.id}`}
-              className="flex items-start justify-between gap-3 px-5 py-4 hover:bg-rose-50/50"
+              className="flex items-start justify-between gap-3 px-5 py-4 hover:bg-brand-50/50"
             >
               <div>
                 <span className="mr-2 rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-600">

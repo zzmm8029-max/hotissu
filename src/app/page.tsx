@@ -1,5 +1,10 @@
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/constants";
+import NearbyMerchants from "@/components/NearbyMerchants";
+import MerchantCard from "@/components/MerchantCard";
+
+export const revalidate = 60;
 
 const FEATURES = [
   {
@@ -28,30 +33,57 @@ const FEATURES = [
   },
 ] as const;
 
-export default function Home() {
+const HOME_LIST_LIMIT = 12;
+
+export default async function Home() {
+  const merchants = await prisma.merchant.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      name: true,
+      category: true,
+      description: true,
+      benefitInfo: true,
+      address: true,
+      region: true,
+      district: true,
+      phone: true,
+      latitude: true,
+      longitude: true,
+    },
+  });
+  const merchantCount = merchants.length;
+
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12">
-      <section className="rounded-3xl bg-gradient-to-br from-rose-50 to-orange-50 px-6 py-14 text-center sm:py-20">
-        <p className="text-sm font-semibold text-rose-500">{SITE_NAME}</p>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
-          임산부를 위한 혜택,
-          <br className="sm:hidden" /> 놓치지 말고 다 챙기세요
+    <div className="mx-auto max-w-5xl px-4 py-10">
+      <header className="mb-6">
+        <p className="text-sm font-semibold text-brand-600">{SITE_NAME}</p>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
+          {SITE_DESCRIPTION}
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-neutral-600">{SITE_DESCRIPTION}</p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link
-            href="/benefits"
-            className="rounded-full bg-rose-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-600"
-          >
-            혜택 둘러보기
-          </Link>
-          <Link
-            href="/checklist"
-            className="rounded-full border border-rose-200 bg-white px-6 py-3 text-sm font-semibold text-rose-600 transition hover:bg-rose-50"
-          >
-            체크리스트 시작하기
+      </header>
+
+      <NearbyMerchants merchants={merchants} />
+
+      <section className="mt-10">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 className="text-lg font-bold text-neutral-900">
+            현재 <span className="text-brand-600">{merchantCount}곳</span>의 배려 매장이 함께하고 있어요
+          </h2>
+          <Link href="/merchants" className="text-sm font-medium text-brand-600 hover:text-brand-700">
+            전체 보기 →
           </Link>
         </div>
+
+        {merchantCount === 0 ? (
+          <p className="mt-4 text-sm text-neutral-500">아직 등록된 가맹점이 없어요.</p>
+        ) : (
+          <div className="mt-4 flex gap-4 overflow-x-auto pb-2">
+            {merchants.slice(0, HOME_LIST_LIMIT).map((merchant) => (
+              <MerchantCard key={merchant.id} merchant={merchant} compact />
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="mt-14 grid gap-4 sm:grid-cols-2">
@@ -59,10 +91,10 @@ export default function Home() {
           <Link
             key={feature.href}
             href={feature.href}
-            className="group rounded-2xl border border-neutral-200 p-6 transition hover:border-rose-200 hover:bg-rose-50/50"
+            className="group rounded-2xl border border-neutral-200 p-6 transition hover:border-brand-200 hover:bg-brand-50/50"
           >
             <div className="text-3xl">{feature.emoji}</div>
-            <h2 className="mt-3 text-lg font-semibold text-neutral-900 group-hover:text-rose-600">
+            <h2 className="mt-3 text-lg font-semibold text-neutral-900 group-hover:text-brand-600">
               {feature.title}
             </h2>
             <p className="mt-1.5 text-sm text-neutral-600">{feature.description}</p>

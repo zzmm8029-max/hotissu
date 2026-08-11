@@ -46,8 +46,8 @@ export default async function BenefitsPage({
             href={option.value === "ALL" ? "/benefits" : `/benefits?category=${option.value}`}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
               selected === option.value
-                ? "bg-rose-500 text-white"
-                : "border border-neutral-200 text-neutral-600 hover:bg-rose-50 hover:text-rose-600"
+                ? "bg-brand-500 text-white"
+                : "border border-neutral-200 text-neutral-600 hover:bg-brand-50 hover:text-brand-600"
             }`}
           >
             {option.label}
@@ -60,10 +60,10 @@ export default async function BenefitsPage({
           <li key={benefit.id}>
             <Link
               href={`/benefits/${benefit.id}`}
-              className="block h-full rounded-2xl border border-neutral-200 p-5 transition hover:border-rose-200 hover:bg-rose-50/50"
+              className="block h-full rounded-2xl border border-neutral-200 p-5 transition hover:border-brand-200 hover:bg-brand-50/50"
             >
               <div className="flex flex-wrap gap-1.5">
-                <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-600">
+                <span className="rounded-full bg-brand-100 px-2.5 py-0.5 text-xs font-medium text-brand-600">
                   {BENEFIT_CATEGORY_LABEL[benefit.category]}
                 </span>
                 <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600">

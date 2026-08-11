@@ -48,16 +48,16 @@ export default function ChecklistClient({ stages }: { stages: StageGroup[] }) {
 
   return (
     <div className="mt-6 space-y-8">
-      <div className="rounded-2xl bg-rose-50 px-5 py-4">
-        <div className="flex items-center justify-between text-sm font-medium text-rose-700">
+      <div className="rounded-2xl bg-brand-50 px-5 py-4">
+        <div className="flex items-center justify-between text-sm font-medium text-brand-700">
           <span>진행 상황</span>
           <span>
             {doneItems} / {totalItems}
           </span>
         </div>
-        <div className="mt-2 h-2 rounded-full bg-rose-100">
+        <div className="mt-2 h-2 rounded-full bg-brand-100">
           <div
-            className="h-2 rounded-full bg-rose-500 transition-all"
+            className="h-2 rounded-full bg-brand-500 transition-all"
             style={{ width: totalItems ? `${(doneItems / totalItems) * 100}%` : "0%" }}
           />
         </div>
@@ -74,7 +74,7 @@ export default function ChecklistClient({ stages }: { stages: StageGroup[] }) {
               >
                 <input
                   type="checkbox"
-                  className="mt-1 h-4 w-4 accent-rose-500"
+                  className="mt-1 h-4 w-4 accent-brand-500"
                   checked={Boolean(checked[item.id])}
                   onChange={(e) =>
                     setChecked((prev) => ({ ...prev, [item.id]: e.target.checked }))
@@ -94,7 +94,7 @@ export default function ChecklistClient({ stages }: { stages: StageGroup[] }) {
                   {item.benefit && (
                     <Link
                       href={`/benefits/${item.benefit.id}`}
-                      className="mt-1 inline-block text-sm font-medium text-rose-500 hover:underline"
+                      className="mt-1 inline-block text-sm font-medium text-brand-500 hover:underline"
                     >
                       관련 혜택 보기: {item.benefit.title} →
                     </Link>

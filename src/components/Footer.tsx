@@ -2,7 +2,7 @@ import { SITE_NAME } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-rose-100 bg-rose-50/50">
+    <footer className="mt-16 border-t border-brand-100 bg-brand-50/50">
       <div className="mx-auto max-w-5xl px-4 py-8 text-sm text-neutral-500">
         <p className="font-medium text-neutral-700">{SITE_NAME}</p>
         <p className="mt-2">

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { MerchantCategory } from "@/generated/prisma/enums";
 import { MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
+import MerchantCard from "@/components/MerchantCard";
 
 export const metadata: Metadata = {
   title: "배려 가맹점",
@@ -61,8 +62,8 @@ export default async function MerchantsPage({
             href={buildHref({ category: option.value })}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
               selectedCategory === option.value
-                ? "bg-rose-500 text-white"
-                : "border border-neutral-200 text-neutral-600 hover:bg-rose-50 hover:text-rose-600"
+                ? "bg-brand-500 text-white"
+                : "border border-neutral-200 text-neutral-600 hover:bg-brand-50 hover:text-brand-600"
             }`}
           >
             {option.label}
@@ -98,27 +99,8 @@ export default async function MerchantsPage({
 
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
         {merchants.map((merchant) => (
-          <li key={merchant.id} className="rounded-2xl border border-neutral-200 p-5">
-            <div className="flex flex-wrap gap-1.5">
-              <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-600">
-                {MERCHANT_CATEGORY_LABEL[merchant.category]}
-              </span>
-              <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600">
-                {merchant.region}
-                {merchant.district ? ` · ${merchant.district}` : ""}
-              </span>
-            </div>
-            <h2 className="mt-3 font-semibold text-neutral-900">{merchant.name}</h2>
-            {merchant.description && (
-              <p className="mt-1 text-sm text-neutral-600">{merchant.description}</p>
-            )}
-            <p className="mt-2 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">
-              {merchant.benefitInfo}
-            </p>
-            <p className="mt-2 text-sm text-neutral-500">{merchant.address}</p>
-            {merchant.phone && (
-              <p className="mt-1 text-sm text-neutral-500">☎ {merchant.phone}</p>
-            )}
+          <li key={merchant.id}>
+            <MerchantCard merchant={merchant} />
           </li>
         ))}
 
