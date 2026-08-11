@@ -112,6 +112,27 @@ model ChecklistItem {
   @@index([stage])
 }
 
+// 임산부 인증 상태
+enum VerificationStatus {
+  PENDING // 심사 대기
+  APPROVED // 인증 완료
+  REJECTED // 반려
+}
+
+// 인증 회원 (임산부 자격 인증 + 회원증)
+model Member {
+  id              String             @id @default(cuid())
+  nickname        String
+  dueDate         DateTime? // 출산예정일
+  proofImage      String // 증빙 서류(산모수첩 등) 사진, data URL로 저장
+  status          VerificationStatus @default(PENDING)
+  rejectionReason String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([status])
+}
+
 // 커뮤니티 게시글 카테고리
 enum PostCategory {
   REVIEW // 혜택/가맹점 후기

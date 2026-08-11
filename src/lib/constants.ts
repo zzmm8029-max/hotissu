@@ -7,4 +7,5 @@ export const NAV_LINKS = [
   { href: "/merchants", label: "가맹점" },
   { href: "/checklist", label: "체크리스트" },
   { href: "/community", label: "커뮤니티" },
+  { href: "/membership", label: "회원증" },
 ] as const;
