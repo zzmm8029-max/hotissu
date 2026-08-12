@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { NAV_LINKS, SITE_NAME, SITE_SLOGAN } from "@/lib/constants";
 
 export default function Header() {
   const pathname = usePathname();
@@ -13,9 +13,12 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-brand-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 text-lg font-bold text-brand-600">
+        <Link href="/" className="flex items-center gap-2 text-brand-600">
           <Image src="/logo.webp" alt="" width={32} height={32} className="rounded-full" priority />
-          {SITE_NAME}
+          <span className="leading-tight">
+            <span className="block text-lg font-bold">{SITE_NAME}</span>
+            <span className="block text-[11px] font-medium text-neutral-500">{SITE_SLOGAN}</span>
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 sm:flex">

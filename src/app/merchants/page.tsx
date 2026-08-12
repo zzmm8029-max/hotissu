@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { MerchantCategory } from "@/generated/prisma/enums";
 import { MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
 import MerchantCard from "@/components/MerchantCard";
+import MerchantMap from "@/components/MerchantMapLoader";
 
 export const metadata: Metadata = {
   title: "배려 가맹점",
@@ -54,6 +55,13 @@ export default async function MerchantsPage({
       <p className="mt-2 text-sm text-neutral-600">
         임산부 배려석, 전용 주차장, 유아 휴게실(기저귀 교환대) 등을 갖춘 가맹점·시설을 찾아보세요.
       </p>
+
+      <p className="mt-6 text-sm text-neutral-500">
+        지도에서 위치를 먼저 둘러본 후, 바로 아래 목록에서 자세한 혜택을 확인하세요.
+      </p>
+      <div className="mt-3">
+        <MerchantMap merchants={merchants} />
+      </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
         {CATEGORY_OPTIONS.map((option) => (

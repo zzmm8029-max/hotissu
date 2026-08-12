@@ -1,6 +1,6 @@
 import type { MerchantCategory } from "@/generated/prisma/enums";
 import { MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
-import { formatDistanceKm } from "@/lib/geo";
+import { formatDistanceKm, googleMapsUrl } from "@/lib/geo";
 
 export type MerchantCardData = {
   id: string;
@@ -14,6 +14,11 @@ export type MerchantCardData = {
   phone: string | null;
 };
 
+export type MerchantMapData = MerchantCardData & {
+  latitude: number | null;
+  longitude: number | null;
+};
+
 export default function MerchantCard({
   merchant,
   distanceKm,
@@ -23,6 +28,8 @@ export default function MerchantCard({
   distanceKm?: number;
   compact?: boolean;
 }) {
+  const benefitLines = merchant.benefitInfo.split("\n").filter(Boolean);
+
   return (
     <div
       className={
@@ -49,10 +56,27 @@ export default function MerchantCard({
       {merchant.description && (
         <p className="mt-1 text-sm text-neutral-600">{merchant.description}</p>
       )}
-      <p className="mt-2 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-700">
-        {merchant.benefitInfo}
-      </p>
-      <p className="mt-2 text-sm text-neutral-500">{merchant.address}</p>
+      <ul className="mt-2 space-y-1 rounded-lg bg-brand-50 px-3 py-2.5 text-sm text-brand-700">
+        {benefitLines.map((line, i) => (
+          <li key={i} className="flex gap-1.5">
+            <span aria-hidden className="text-brand-400">
+              ●
+            </span>
+            <span>{line}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <p className="text-sm text-neutral-500">{merchant.address}</p>
+        <a
+          href={googleMapsUrl(merchant.address)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0 text-sm font-medium text-brand-600 hover:text-brand-700"
+        >
+          지도에서 열기 →
+        </a>
+      </div>
       {merchant.phone && <p className="mt-1 text-sm text-neutral-500">☎ {merchant.phone}</p>}
     </div>
   );
