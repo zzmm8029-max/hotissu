@@ -8,28 +8,28 @@ export const revalidate = 60;
 
 const FEATURES = [
   {
-    href: "/benefits",
-    emoji: "📋",
-    title: "혜택/정책 정보 모음",
-    description: "중앙정부·지자체·민간의 임산부 혜택과 정책을 한눈에 모아봐요.",
-  },
-  {
     href: "/merchants",
     emoji: "🏬",
     title: "배려 가맹점",
     description: "임산부 배려석, 전용 주차장, 유아 휴게실(기저귀 교환대) 등 배려 시설과 가맹점을 찾아봐요.",
   },
   {
-    href: "/checklist",
-    emoji: "✅",
-    title: "혜택 신청 체크리스트",
-    description: "임신 주수와 상황에 맞는 신청 체크리스트로 놓치는 혜택 없이 챙겨요.",
+    href: "/benefits",
+    emoji: "📋",
+    title: "혜택/정책 정보 모음",
+    description: "중앙정부·지자체·민간의 임산부 혜택과 정책을 한눈에 모아봐요.",
   },
   {
     href: "/community",
     emoji: "💬",
     title: "커뮤니티/후기",
     description: "다른 예비맘·선배맘들의 혜택 신청 후기와 정보를 나눠요.",
+  },
+  {
+    href: "/checklist",
+    emoji: "✅",
+    title: "혜택 신청 체크리스트",
+    description: "임신 주수와 상황에 맞는 신청 체크리스트로 놓치는 혜택 없이 챙겨요.",
   },
 ] as const;
 
