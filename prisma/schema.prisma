@@ -83,6 +83,8 @@ model Merchant {
   homepage    String?
   sourceName  String?
   sourceUrl   String?
+  // 창립 파트너(최초 20곳) 여부. true면 운영 수수료 0%, false(21번째부터)면 3% 적용
+  isFoundingPartner Boolean @default(true)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
@@ -158,6 +160,7 @@ model Post {
   merchant     Merchant? @relation(fields: [merchantId], references: [id])
   merchantId   String?
   receiptImage String? // 영수증 사진, data URL로 저장
+  amount       Int? // 결제 금액(원). 정산(수수료·기부금 계산)의 기준이 됨
 
   comments Comment[]
 }

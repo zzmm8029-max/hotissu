@@ -9,7 +9,9 @@ type MerchantOption = { id: string; name: string };
 
 export default function NewPostForm({ merchants }: { merchants: MerchantOption[] }) {
   const [category, setCategory] = useState<string>(PostCategory.FREE);
+  const [merchantId, setMerchantId] = useState("");
   const isReview = category === PostCategory.REVIEW;
+  const hasMerchant = isReview && merchantId !== "";
 
   return (
     <form action={createPost} className="mt-6 space-y-4">
@@ -69,7 +71,8 @@ export default function NewPostForm({ merchants }: { merchants: MerchantOption[]
             </label>
             <select
               name="merchantId"
-              defaultValue=""
+              value={merchantId}
+              onChange={(e) => setMerchantId(e.target.value)}
               className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm"
             >
               <option value="">매장을 선택해주세요</option>
@@ -81,19 +84,49 @@ export default function NewPostForm({ merchants }: { merchants: MerchantOption[]
             </select>
           </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium text-neutral-700">영수증 사진</label>
-            <input
-              name="receiptImage"
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="w-full text-sm text-neutral-600 file:mr-3 file:rounded-full file:border-0 file:bg-brand-100 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600"
-            />
-            <p className="mt-1.5 text-xs text-neutral-500">
-              결제 후 받은 영수증을 찍어서 올려주시면 실제 이용 후기로 표시돼요. (최대 3MB)
-            </p>
-          </div>
+          {hasMerchant && (
+            <>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">
+                  결제 금액
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    name="amount"
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    step={100}
+                    required
+                    placeholder="15000"
+                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm"
+                  />
+                  <span className="text-sm text-neutral-500">원</span>
+                </div>
+                <p className="mt-1.5 text-xs text-neutral-500">
+                  영수증에 찍힌 결제 금액을 입력해주세요. 매장 정산(수수료·기부금 계산)의 기준이
+                  돼요.
+                </p>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-medium text-neutral-700">
+                  영수증 사진
+                </label>
+                <input
+                  name="receiptImage"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  required
+                  className="w-full text-sm text-neutral-600 file:mr-3 file:rounded-full file:border-0 file:bg-brand-100 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600"
+                />
+                <p className="mt-1.5 text-xs text-neutral-500">
+                  결제 금액이 보이도록 영수증을 찍어 올려주세요. (최대 3MB)
+                </p>
+              </div>
+            </>
+          )}
         </div>
       )}
 

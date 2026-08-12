@@ -14,6 +14,7 @@ export async function createPost(formData: FormData) {
   const authorNameRaw = String(formData.get("authorName") ?? "").trim();
   const categoryRaw = String(formData.get("category") ?? "");
   const merchantId = String(formData.get("merchantId") ?? "").trim();
+  const amountRaw = String(formData.get("amount") ?? "").trim();
   const receiptFile = formData.get("receiptImage");
 
   if (!title || !content) {
@@ -23,6 +24,17 @@ export async function createPost(formData: FormData) {
   const category = CATEGORY_VALUES.includes(categoryRaw)
     ? (categoryRaw as PostCategory)
     : PostCategory.FREE;
+  const isReview = category === PostCategory.REVIEW;
+  const hasMerchant = isReview && Boolean(merchantId);
+
+  let amount: number | undefined;
+  if (hasMerchant) {
+    const parsed = Number(amountRaw);
+    if (!Number.isFinite(parsed) || parsed <= 0) {
+      throw new Error("결제 금액을 정확히 입력해주세요.");
+    }
+    amount = Math.round(parsed);
+  }
 
   let receiptImage: string | undefined;
   if (receiptFile instanceof File && receiptFile.size > 0) {
@@ -34,9 +46,9 @@ export async function createPost(formData: FormData) {
     }
     const buffer = Buffer.from(await receiptFile.arrayBuffer());
     receiptImage = `data:${receiptFile.type};base64,${buffer.toString("base64")}`;
+  } else if (hasMerchant) {
+    throw new Error("영수증 사진을 첨부해주세요.");
   }
-
-  const isReview = category === PostCategory.REVIEW;
 
   const post = await prisma.post.create({
     data: {
@@ -44,8 +56,9 @@ export async function createPost(formData: FormData) {
       content,
       category,
       authorName: authorNameRaw || "익명",
-      merchantId: isReview && merchantId ? merchantId : undefined,
+      merchantId: hasMerchant ? merchantId : undefined,
       receiptImage: isReview ? receiptImage : undefined,
+      amount,
     },
   });
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
@@ -17,11 +18,19 @@ export default async function AdminVerifyPage() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-neutral-900">인증 대기 ({pending.length}건)</h1>
-        <form action={adminLogout}>
-          <button type="submit" className="text-sm text-neutral-500 hover:text-neutral-700">
-            로그아웃
-          </button>
-        </form>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin/settlement"
+            className="text-sm text-neutral-500 hover:text-neutral-700"
+          >
+            정산 대시보드 →
+          </Link>
+          <form action={adminLogout}>
+            <button type="submit" className="text-sm text-neutral-500 hover:text-neutral-700">
+              로그아웃
+            </button>
+          </form>
+        </div>
       </div>
 
       {pending.length === 0 ? (

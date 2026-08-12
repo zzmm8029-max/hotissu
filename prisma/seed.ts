@@ -250,6 +250,7 @@ async function main() {
         address: "서울특별시 마포구 월드컵로 21",
         region: "서울특별시",
         district: "마포구",
+        isFoundingPartner: false, // 정산 대시보드 테스트용: 21번째 이후 합류한 일반 매장 예시
         latitude: 37.5563,
         longitude: 126.9227,
       },
