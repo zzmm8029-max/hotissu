@@ -86,6 +86,8 @@ model Merchant {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
+  reviews Post[]
+
   @@index([category])
   @@index([region, district])
 }
@@ -151,6 +153,11 @@ model Post {
   viewCount Int          @default(0)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+
+  // 영수증 인증 후기 (네이버 영수증 리뷰 방식): 특정 매장 이용을 영수증 사진으로 인증
+  merchant     Merchant? @relation(fields: [merchantId], references: [id])
+  merchantId   String?
+  receiptImage String? // 영수증 사진, data URL로 저장
 
   comments Comment[]
 }

@@ -25,7 +25,7 @@ export default async function CommunityPostPage({
   const post = await prisma.post.update({
     where: { id },
     data: { viewCount: { increment: 1 } },
-    include: { comments: { orderBy: { createdAt: "asc" } } },
+    include: { comments: { orderBy: { createdAt: "asc" } }, merchant: { select: { name: true } } },
   }).catch(() => null);
 
   if (!post) {
@@ -44,15 +44,30 @@ export default async function CommunityPostPage({
         <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600">
           {POST_CATEGORY_LABEL[post.category]}
         </span>
+        {post.receiptImage && (
+          <span className="ml-2 rounded-full bg-brand-100 px-2.5 py-0.5 text-xs font-medium text-brand-600">
+            ✓ 영수증 인증
+          </span>
+        )}
         <h1 className="mt-2 text-2xl font-bold text-neutral-900">{post.title}</h1>
         <p className="mt-1 text-sm text-neutral-500">
-          {post.authorName} · 조회 {post.viewCount}
+          {post.authorName}
+          {post.merchant && ` · ${post.merchant.name}`} · 조회 {post.viewCount}
         </p>
       </div>
 
       <p className="mt-6 whitespace-pre-line leading-relaxed text-neutral-800">
         {post.content}
       </p>
+
+      {post.receiptImage && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={post.receiptImage}
+          alt="인증 영수증"
+          className="mt-4 max-h-96 rounded-xl border border-neutral-200 object-contain"
+        />
+      )}
 
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-neutral-900">

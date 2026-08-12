@@ -30,7 +30,7 @@ export default async function CommunityPage({
   const posts = await prisma.post.findMany({
     where: selected === "ALL" ? {} : { category: selected },
     orderBy: { createdAt: "desc" },
-    include: { _count: { select: { comments: true } } },
+    include: { _count: { select: { comments: true } }, merchant: { select: { name: true } } },
   });
 
   return (
@@ -75,9 +75,16 @@ export default async function CommunityPage({
                 <span className="mr-2 rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-600">
                   {POST_CATEGORY_LABEL[post.category]}
                 </span>
+                {post.receiptImage && (
+                  <span className="mr-2 rounded-full bg-brand-100 px-2 py-0.5 text-xs font-medium text-brand-600">
+                    ✓ 영수증 인증
+                  </span>
+                )}
                 <span className="font-medium text-neutral-900">{post.title}</span>
                 <p className="mt-1 text-sm text-neutral-500">
-                  {post.authorName} · 댓글 {post._count.comments} · 조회 {post.viewCount}
+                  {post.authorName}
+                  {post.merchant && ` · ${post.merchant.name}`} · 댓글 {post._count.comments} · 조회{" "}
+                  {post.viewCount}
                 </p>
               </div>
             </Link>
