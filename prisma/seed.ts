@@ -302,7 +302,7 @@ async function main() {
         name: "가지 동네 카페 청주점",
         category: "CAFE_RESTAURANT",
         description: "산부인과 인근 카페, 유아 휴게 공간 보유",
-        benefitInfo: "임산부 배려석 우선 배정, 무카페인 음료 안내",
+        benefitInfo: "회원증 제시 시 음료 사이즈업 무료, 무카페인 음료 안내",
         address: "충청북도 청주시 상당구 중앙로 85",
         region: "충청북도",
         district: "청주시 상당구",
