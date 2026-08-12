@@ -81,6 +81,7 @@ model Merchant {
   longitude   Float?
   phone       String?
   homepage    String?
+  photoUrl    String? // 매장 사진 (목록 카드에 노출)
   sourceName  String?
   sourceUrl   String?
   // 창립 파트너(최초 20곳) 여부. true면 운영 수수료 0%, false(21번째부터)면 3% 적용

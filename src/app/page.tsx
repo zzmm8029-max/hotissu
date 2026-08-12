@@ -50,6 +50,7 @@ export default async function Home() {
       phone: true,
       latitude: true,
       longitude: true,
+      photoUrl: true,
     },
   });
   const merchantCount = merchants.length;

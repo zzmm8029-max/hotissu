@@ -1,5 +1,5 @@
 import type { MerchantCategory } from "@/generated/prisma/enums";
-import { MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
+import { MERCHANT_CATEGORY_LABEL, MERCHANT_CATEGORY_PHOTO_FALLBACK } from "@/lib/labels";
 import { formatDistanceKm, googleMapsUrl } from "@/lib/geo";
 
 export type MerchantCardData = {
@@ -12,6 +12,7 @@ export type MerchantCardData = {
   region: string;
   district: string | null;
   phone: string | null;
+  photoUrl?: string | null;
 };
 
 export type MerchantMapData = MerchantCardData & {
@@ -29,6 +30,8 @@ export default function MerchantCard({
   compact?: boolean;
 }) {
   const benefitLines = merchant.benefitInfo.split("\n").filter(Boolean);
+  const photoFallback = MERCHANT_CATEGORY_PHOTO_FALLBACK[merchant.category];
+  const photoSizeClass = compact ? "h-14 w-14" : "h-20 w-20";
 
   return (
     <div
@@ -52,10 +55,29 @@ export default function MerchantCard({
           </span>
         )}
       </div>
-      <h3 className="mt-3 font-semibold text-neutral-900">{merchant.name}</h3>
-      {merchant.description && (
-        <p className="mt-1 text-sm text-neutral-600">{merchant.description}</p>
-      )}
+      <div className="mt-3 flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <h3 className="font-semibold text-neutral-900">{merchant.name}</h3>
+          {merchant.description && (
+            <p className="mt-1 text-sm text-neutral-600">{merchant.description}</p>
+          )}
+        </div>
+        {merchant.photoUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={merchant.photoUrl}
+            alt={`${merchant.name} 매장 사진`}
+            className={`${photoSizeClass} shrink-0 rounded-xl border border-neutral-200 object-cover`}
+          />
+        ) : (
+          <div
+            aria-hidden
+            className={`${photoSizeClass} flex shrink-0 items-center justify-center rounded-xl text-2xl ${photoFallback.className}`}
+          >
+            {photoFallback.emoji}
+          </div>
+        )}
+      </div>
       <ul className="mt-2 space-y-1 rounded-lg bg-brand-50 px-3 py-2.5 text-sm text-brand-700">
         {benefitLines.map((line, i) => (
           <li key={i} className="flex gap-1.5">

@@ -34,6 +34,21 @@ export const MERCHANT_CATEGORY_LABEL: Record<MerchantCategory, string> = {
   ETC: "기타",
 };
 
+// 매장 사진이 없을 때 카드에 보여줄 대체 아이콘/배경색
+export const MERCHANT_CATEGORY_PHOTO_FALLBACK: Record<
+  MerchantCategory,
+  { emoji: string; className: string }
+> = {
+  HOSPITAL: { emoji: "🏥", className: "bg-teal-50 text-teal-600" },
+  PHARMACY: { emoji: "💊", className: "bg-sky-50 text-sky-600" },
+  MART: { emoji: "🛒", className: "bg-amber-50 text-amber-600" },
+  CAFE_RESTAURANT: { emoji: "☕", className: "bg-brand-50 text-brand-600" },
+  TRANSPORT_FACILITY: { emoji: "🅿️", className: "bg-orange-50 text-orange-600" },
+  BEAUTY: { emoji: "💆", className: "bg-pink-50 text-pink-600" },
+  EDUCATION: { emoji: "🌱", className: "bg-lime-50 text-lime-600" },
+  ETC: { emoji: "🏬", className: "bg-neutral-100 text-neutral-500" },
+};
+
 export const CHECKLIST_STAGE_LABEL: Record<ChecklistStage, string> = {
   EARLY: "임신 초기 (1~12주)",
   MID: "임신 중기 (13~27주)",

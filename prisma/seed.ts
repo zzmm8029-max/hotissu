@@ -229,6 +229,7 @@ async function main() {
         longitude: 126.978,
         phone: "120",
         sourceName: "서울시",
+        photoUrl: "/images/merchants/seoul-health-center.svg",
       },
       {
         name: "행복맘 산부인과",
@@ -241,6 +242,7 @@ async function main() {
         latitude: 37.5006,
         longitude: 127.0364,
         phone: "02-000-0000",
+        photoUrl: "/images/merchants/happy-mom-obgyn.svg",
       },
       {
         name: "우리동네 마트 (임산부 배려 주차장 운영)",
@@ -254,6 +256,7 @@ async function main() {
         isFoundingPartner: false, // 정산 대시보드 테스트용: 21번째 이후 합류한 일반 매장 예시
         latitude: 37.5563,
         longitude: 126.9227,
+        photoUrl: "/images/merchants/neighborhood-mart.svg",
       },
       {
         name: "포근한 카페 (유아 휴게실 운영)",
@@ -265,6 +268,7 @@ async function main() {
         district: "서초구",
         latitude: 37.4945,
         longitude: 127.0142,
+        photoUrl: "/images/merchants/cozy-cafe.svg",
       },
       {
         name: "새싹 태교 문화센터",
@@ -276,6 +280,7 @@ async function main() {
         district: "송파구",
         latitude: 37.5219,
         longitude: 127.1236,
+        photoUrl: "/images/merchants/saessak-edu.svg",
       },
       {
         name: "청주 가지 고기집",
@@ -287,6 +292,7 @@ async function main() {
         district: "청주시 상당구",
         latitude: 36.6357,
         longitude: 127.4913,
+        photoUrl: "/images/merchants/cheongju-galbi.svg",
       },
       {
         name: "가지 동네 카페 청주점",
@@ -298,6 +304,7 @@ async function main() {
         district: "청주시 상당구",
         latitude: 36.6372,
         longitude: 127.4896,
+        photoUrl: "/images/merchants/gaji-cafe-cheongju.svg",
       },
     ],
   });
