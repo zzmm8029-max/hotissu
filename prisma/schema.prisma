@@ -57,7 +57,7 @@ model Benefit {
 
 // 가맹점 카테고리
 enum MerchantCategory {
-  HOSPITAL // 보건소
+  HOSPITAL // 병원(보건소 포함, 산부인과 제외)
   PHARMACY // 약국
   MART // 마트/편의점
   CAFE_RESTAURANT // 카페/음식점
