@@ -218,33 +218,6 @@ async function main() {
   await prisma.merchant.createMany({
     data: [
       {
-        name: "서울시 보건소 맘편한 임신 상담센터",
-        category: "HOSPITAL",
-        description: "임신·출산 관련 상담 및 각종 지원 신청 안내",
-        benefitInfo: "임신·출산 진료비, 산모·신생아 건강관리 서비스 신청 안내",
-        address: "서울특별시 중구 세종대로 110",
-        region: "서울특별시",
-        district: "중구",
-        latitude: 37.5665,
-        longitude: 126.978,
-        phone: "120",
-        sourceName: "서울시",
-        photoUrl: "/images/merchants/seoul-health-center.svg",
-      },
-      {
-        name: "행복맘 병원",
-        category: "HOSPITAL",
-        description: "임산부 정기검진 및 진료 지원",
-        benefitInfo: "국민행복카드 사용 가능\n가지 회원증 제시 시 임산부 우선 진료 안내",
-        address: "서울특별시 강남구 테헤란로 123",
-        region: "서울특별시",
-        district: "강남구",
-        latitude: 37.5006,
-        longitude: 127.0364,
-        phone: "02-000-0000",
-        photoUrl: "/images/merchants/happy-mom-hospital.svg",
-      },
-      {
         name: "우리동네 마트 (임산부 배려 주차장 운영)",
         category: "MART",
         description: "임산부 전용 주차구역 및 우선 계산대 운영",

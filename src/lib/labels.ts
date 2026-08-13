@@ -38,6 +38,7 @@ export const MERCHANT_CATEGORY_LABEL: Record<MerchantCategory, string> = {
 // 가맹점 목록 페이지에 노출할 카테고리 필터 칩(순서 고정)
 export const MERCHANT_CATEGORY_FILTER_ORDER: MerchantCategory[] = [
   "CAFE_RESTAURANT",
+  "HOSPITAL",
   "PHARMACY",
   "MART",
   "TOY_RENTAL",
