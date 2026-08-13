@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { MerchantCategory } from "@/generated/prisma/enums";
-import { MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
+import { MERCHANT_CATEGORY_FILTER_ORDER, MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
 import MerchantCard from "@/components/MerchantCard";
 import MerchantMap from "@/components/MerchantMapLoader";
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const CATEGORY_OPTIONS = [
   { value: "ALL", label: "전체" },
-  ...Object.values(MerchantCategory).map((value) => ({
+  ...MERCHANT_CATEGORY_FILTER_ORDER.map((value) => ({
     value,
     label: MERCHANT_CATEGORY_LABEL[value],
   })),

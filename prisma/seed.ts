@@ -246,7 +246,7 @@ async function main() {
       },
       {
         name: "우리동네 마트 (임산부 배려 주차장 운영)",
-        category: "TRANSPORT_FACILITY",
+        category: "MART",
         description: "임산부 전용 주차구역 및 우선 계산대 운영",
         benefitInfo:
           "매주 화요일 가지 회원증 제시 시 생필품·기저귀 전 품목 5% 할인\n주말(토·일) 오전 10시~12시 이유식·유아용품 10% 할인",
@@ -281,6 +281,31 @@ async function main() {
         latitude: 37.5219,
         longitude: 127.1236,
         photoUrl: "/images/merchants/saessak-edu.svg",
+      },
+      {
+        name: "모락모락 장난감·책 대여방",
+        category: "TOY_RENTAL",
+        description: "개월수에 맞는 유아 장난감·전집 대여 서비스 운영",
+        benefitInfo:
+          "가지 회원증 제시 시 첫 달 대여료 20% 할인\n개월수별 장난감·책 추천 상담 무료 제공",
+        address: "서울특별시 송파구 올림픽로 250",
+        region: "서울특별시",
+        district: "송파구",
+        latitude: 37.5145,
+        longitude: 127.1058,
+        photoUrl: "/images/merchants/toy-book-rental.svg",
+      },
+      {
+        name: "청주 무럭무럭 장난감 대여점",
+        category: "TOY_RENTAL",
+        description: "0~5세 개월수별 장난감·전집 정기 대여 서비스",
+        benefitInfo: "가지 회원증 제시 시 정기 대여 신청비 면제\n형제자매 2명 이상 등록 시 두 번째 아동 대여료 15% 할인",
+        address: "충청북도 청주시 상당구 상당로 150",
+        region: "충청북도",
+        district: "청주시 상당구",
+        latitude: 36.6389,
+        longitude: 127.4934,
+        photoUrl: "/images/merchants/toy-book-rental-cheongju.svg",
       },
       {
         name: "청주 가지 고기집",

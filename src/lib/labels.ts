@@ -29,10 +29,22 @@ export const MERCHANT_CATEGORY_LABEL: Record<MerchantCategory, string> = {
   MART: "마트/편의점",
   CAFE_RESTAURANT: "카페/음식점",
   TRANSPORT_FACILITY: "배려 시설",
-  BEAUTY: "뷰티/케어",
+  TOY_RENTAL: "장난감 대여시설",
+  BEAUTY: "피부/미용",
   EDUCATION: "태교/교육",
   ETC: "기타",
 };
+
+// 가맹점 목록 페이지에 노출할 카테고리 필터 칩(순서 고정)
+export const MERCHANT_CATEGORY_FILTER_ORDER: MerchantCategory[] = [
+  "CAFE_RESTAURANT",
+  "PHARMACY",
+  "MART",
+  "TOY_RENTAL",
+  "BEAUTY",
+  "EDUCATION",
+  "ETC",
+];
 
 // 매장 사진이 없을 때 카드에 보여줄 대체 아이콘/배경색
 export const MERCHANT_CATEGORY_PHOTO_FALLBACK: Record<
@@ -44,6 +56,7 @@ export const MERCHANT_CATEGORY_PHOTO_FALLBACK: Record<
   MART: { emoji: "🛒", className: "bg-amber-50 text-amber-600" },
   CAFE_RESTAURANT: { emoji: "☕", className: "bg-brand-50 text-brand-600" },
   TRANSPORT_FACILITY: { emoji: "🅿️", className: "bg-orange-50 text-orange-600" },
+  TOY_RENTAL: { emoji: "🧸", className: "bg-indigo-50 text-indigo-600" },
   BEAUTY: { emoji: "💆", className: "bg-pink-50 text-pink-600" },
   EDUCATION: { emoji: "🌱", className: "bg-lime-50 text-lime-600" },
   ETC: { emoji: "🏬", className: "bg-neutral-100 text-neutral-500" },

@@ -62,7 +62,8 @@ enum MerchantCategory {
   MART // 마트/편의점
   CAFE_RESTAURANT // 카페/음식점
   TRANSPORT_FACILITY // 배려석/주차장/유아 휴게실 등 시설
-  BEAUTY // 뷰티/케어
+  TOY_RENTAL // 유아 장난감/책 대여시설 (개월수별)
+  BEAUTY // 피부/미용
   EDUCATION // 태교/교육
   ETC
 }
