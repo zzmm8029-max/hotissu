@@ -7,7 +7,7 @@ import MerchantCard from "@/components/MerchantCard";
 import MerchantMap from "@/components/MerchantMapLoader";
 
 export const metadata: Metadata = {
-  title: "배려 가맹점",
+  title: "가지가맹점",
 };
 
 const CATEGORY_OPTIONS = [
@@ -51,7 +51,7 @@ export default async function MerchantsPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="text-2xl font-bold text-neutral-900">배려 가맹점</h1>
+      <h1 className="text-2xl font-bold text-neutral-900">가지가맹점</h1>
       <p className="mt-2 text-sm text-neutral-600">
         임산부 배려석, 전용 주차장, 유아 휴게실(기저귀 교환대) 등을 갖춘 가맹점·시설을 찾아보세요.
       </p>

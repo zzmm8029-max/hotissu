@@ -33,7 +33,7 @@ export default function MembershipCard({ member }: { member: MemberPublic }) {
         </div>
       </div>
       <p className="mt-3 text-center text-xs text-neutral-500">
-        배려 가맹점에서 이 화면을 보여주세요.
+        가지가맹점에서 이 화면을 보여주세요.
       </p>
     </div>
   );

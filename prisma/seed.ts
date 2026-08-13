@@ -232,19 +232,6 @@ async function main() {
         photoUrl: "/images/merchants/seoul-health-center.svg",
       },
       {
-        name: "행복맘 산부인과",
-        category: "HOSPITAL",
-        description: "임산부 정기검진 및 고위험 임신 관리",
-        benefitInfo: "국민행복카드 사용 가능, 고위험 임산부 의료비 지원 연계",
-        address: "서울특별시 강남구 테헤란로 123",
-        region: "서울특별시",
-        district: "강남구",
-        latitude: 37.5006,
-        longitude: 127.0364,
-        phone: "02-000-0000",
-        photoUrl: "/images/merchants/happy-mom-obgyn.svg",
-      },
-      {
         name: "우리동네 마트 (임산부 배려 주차장 운영)",
         category: "MART",
         description: "임산부 전용 주차구역 및 우선 계산대 운영",
@@ -322,7 +309,7 @@ async function main() {
       {
         name: "가지 동네 카페 청주점",
         category: "CAFE_RESTAURANT",
-        description: "산부인과 인근 카페, 유아 휴게 공간 보유",
+        description: "동네 카페, 유아 휴게 공간 보유",
         benefitInfo: "평일 오전 10시~12시 음료 사이즈업 무료\n무카페인 음료 상시 안내",
         address: "충청북도 청주시 상당구 중앙로 85",
         region: "충청북도",

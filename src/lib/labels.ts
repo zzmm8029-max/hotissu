@@ -24,7 +24,7 @@ export const BENEFIT_PROVIDER_LABEL: Record<BenefitProvider, string> = {
 };
 
 export const MERCHANT_CATEGORY_LABEL: Record<MerchantCategory, string> = {
-  HOSPITAL: "병원/산부인과",
+  HOSPITAL: "보건소",
   PHARMACY: "약국",
   MART: "마트/편의점",
   CAFE_RESTAURANT: "카페/음식점",
