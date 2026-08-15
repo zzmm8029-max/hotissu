@@ -51,12 +51,16 @@ export default async function AdminVerifyPage() {
                   </p>
                 </div>
 
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={member.proofImage}
-                  alt="인증 서류"
-                  className="mt-3 max-h-80 w-full rounded-xl border border-neutral-200 object-contain"
-                />
+                {member.proofImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={member.proofImage}
+                    alt="인증 서류"
+                    className="mt-3 max-h-80 w-full rounded-xl border border-neutral-200 object-contain"
+                  />
+                ) : (
+                  <p className="mt-3 text-sm text-neutral-400">서류 원본이 파기됐어요.</p>
+                )}
 
                 <form className="mt-4 flex flex-wrap items-center gap-2">
                   <input

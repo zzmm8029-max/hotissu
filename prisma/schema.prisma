@@ -130,7 +130,7 @@ model Member {
   id              String             @id @default(cuid())
   nickname        String
   dueDate         DateTime? // 출산예정일
-  proofImage      String // 증빙 서류(산모수첩 등) 사진, data URL로 저장
+  proofImage      String? // 증빙 서류(산모수첩 등) 사진, data URL로 저장. 심사(승인/반려) 완료 시 파기(null 처리)
   status          VerificationStatus @default(PENDING)
   rejectionReason String?
   createdAt       DateTime           @default(now())

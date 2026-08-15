@@ -36,9 +36,10 @@ async function assertAdmin() {
 
 export async function approveMember(memberId: string): Promise<void> {
   await assertAdmin();
+  // 심사 완료 시 증빙 서류 원본은 파기하고 인증 완료 여부만 남긴다.
   await prisma.member.update({
     where: { id: memberId },
-    data: { status: "APPROVED", rejectionReason: null },
+    data: { status: "APPROVED", rejectionReason: null, proofImage: null },
   });
   revalidatePath("/admin/verify");
 }
@@ -46,9 +47,14 @@ export async function approveMember(memberId: string): Promise<void> {
 export async function rejectMember(memberId: string, formData: FormData): Promise<void> {
   await assertAdmin();
   const reason = String(formData.get("reason") ?? "").trim();
+  // 심사 완료 시 증빙 서류 원본은 파기하고 인증 완료 여부만 남긴다.
   await prisma.member.update({
     where: { id: memberId },
-    data: { status: "REJECTED", rejectionReason: reason || "확인이 어려운 서류예요." },
+    data: {
+      status: "REJECTED",
+      rejectionReason: reason || "확인이 어려운 서류예요.",
+      proofImage: null,
+    },
   });
   revalidatePath("/admin/verify");
 }

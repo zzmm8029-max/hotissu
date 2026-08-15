@@ -124,8 +124,11 @@ export default function MembershipClient() {
           className="mt-1.5 w-full text-sm text-neutral-600 file:mr-3 file:rounded-full file:border-0 file:bg-brand-100 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-600"
         />
         <p className="mt-1.5 text-xs text-neutral-500">
-          산모수첩, 임신확인서 등 임신 사실을 확인할 수 있는 사진을 올려주세요. 업로드한 서류는
-          인증 확인 용도로만 사용되고, 승인 담당자만 확인할 수 있어요. (최대 3MB)
+          산모수첩, 임신확인서 등 임신 사실을 확인할 수 있는 사진을 올려주세요. (최대 3MB)
+        </p>
+        <p className="mt-1 text-xs text-neutral-500">
+          제출하신 서류는 자격 확인 목적으로만 사용되며, 심사(승인 또는 반려) 완료 즉시 자동
+          파기됩니다. 서류 원본은 저장되지 않고, 인증 완료 여부만 보관됩니다.
         </p>
       </div>
 
