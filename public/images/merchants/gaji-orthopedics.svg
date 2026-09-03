@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="skyOR" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef2fb"/>
+      <stop offset="1" stop-color="#dbe2f4"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#skyOR)"/>
+  <rect x="0" y="330" width="400" height="70" fill="#c3cdec"/>
+  <rect x="70" y="120" width="260" height="220" rx="14" fill="#ffffff"/>
+  <rect x="70" y="120" width="260" height="36" rx="14" fill="#5b6fb0"/>
+  <rect x="70" y="142" width="260" height="14" fill="#5b6fb0"/>
+  <rect x="110" y="190" width="180" height="120" rx="10" fill="#eef2fb"/>
+  <g transform="translate(200,250) rotate(-30)">
+    <rect x="-60" y="-16" width="120" height="32" rx="16" fill="#ffffff" stroke="#5b6fb0" stroke-width="6"/>
+    <line x1="-40" y1="-16" x2="-40" y2="16" stroke="#5b6fb0" stroke-width="4"/>
+    <line x1="-15" y1="-16" x2="-15" y2="16" stroke="#5b6fb0" stroke-width="4"/>
+    <line x1="10" y1="-16" x2="10" y2="16" stroke="#5b6fb0" stroke-width="4"/>
+    <line x1="35" y1="-16" x2="35" y2="16" stroke="#5b6fb0" stroke-width="4"/>
+  </g>
+  <g transform="translate(200,145)">
+    <circle r="17" fill="#ffffff"/>
+    <rect x="-3" y="-10" width="6" height="20" rx="2" fill="#e8607a"/>
+    <rect x="-10" y="-3" width="20" height="6" rx="2" fill="#e8607a"/>
+  </g>
+</svg>

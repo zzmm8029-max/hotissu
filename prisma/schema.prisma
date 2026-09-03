@@ -1,0 +1,180 @@
+// 임산부 배려 혜택 플랫폼 데이터 모델
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// 혜택/정책 카테고리
+enum BenefitCategory {
+  MEDICAL // 의료/건강
+  FINANCE // 현금성 지원/바우처
+  TRANSPORT // 교통
+  TAX // 세금/공과금 감면
+  EMPLOYMENT // 고용/육아휴직
+  HOUSING // 주거
+  ETC
+}
+
+// 혜택 제공 주체
+enum BenefitProvider {
+  CENTRAL_GOV // 중앙정부
+  LOCAL_GOV // 지자체
+  PUBLIC_ORG // 공공기관
+  PRIVATE // 민간(통신사, 기업 등)
+}
+
+// 혜택/정책 정보
+model Benefit {
+  id          String          @id @default(cuid())
+  title       String
+  summary     String
+  content     String
+  category    BenefitCategory
+  provider    BenefitProvider
+  region      String          @default("전국") // 전국 / 서울특별시 등
+  target      String // 지원 대상 설명
+  amount      String? // 지원 금액/내용 요약
+  applyMethod String? // 신청 방법
+  applyUrl    String? // 신청 링크
+  startDate   DateTime?
+  endDate     DateTime?
+  sourceName  String? // 데이터 출처 (예: 공공데이터포털 - 보건복지부)
+  sourceUrl   String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  checklistItems ChecklistItem[]
+
+  @@index([category])
+  @@index([region])
+}
+
+// 가맹점 카테고리
+enum MerchantCategory {
+  HOSPITAL // 병원(보건소 포함, 산부인과 제외)
+  PHARMACY // 약국
+  MART // 마트/편의점
+  CAFE_RESTAURANT // 카페/음식점
+  TRANSPORT_FACILITY // 배려석/주차장/유아 휴게실 등 시설
+  TOY_RENTAL // 유아 장난감/책 대여시설 (개월수별)
+  BEAUTY // 피부/미용
+  EDUCATION // 태교/교육
+  ETC
+}
+
+// 가맹점/배려 시설
+model Merchant {
+  id          String           @id @default(cuid())
+  name        String
+  category    MerchantCategory
+  description String?
+  benefitInfo String // 이 가맹점에서 받을 수 있는 혜택 설명
+  address     String
+  region      String // 시/도
+  district    String? // 시/군/구
+  latitude    Float?
+  longitude   Float?
+  phone       String?
+  homepage    String?
+  photoUrl    String? // 매장 사진 (목록 카드에 노출)
+  sourceName  String?
+  sourceUrl   String?
+  // 창립 파트너(최초 20곳) 여부. true면 운영 수수료 0%, false(21번째부터)면 3% 적용
+  isFoundingPartner Boolean @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  reviews Post[]
+
+  @@index([category])
+  @@index([region, district])
+}
+
+// 체크리스트 단계 (임신 주수/시기 기준)
+enum ChecklistStage {
+  EARLY // 임신 초기 (1~12주)
+  MID // 임신 중기 (13~27주)
+  LATE // 임신 후기 (28주~출산)
+  POSTPARTUM // 출산 후
+}
+
+// 혜택 신청 체크리스트 항목 (마스터 데이터)
+model ChecklistItem {
+  id          String         @id @default(cuid())
+  stage       ChecklistStage
+  title       String
+  description String?
+  order       Int            @default(0)
+
+  benefit   Benefit? @relation(fields: [benefitId], references: [id])
+  benefitId String?
+
+  @@index([stage])
+}
+
+// 임산부 인증 상태
+enum VerificationStatus {
+  PENDING // 심사 대기
+  APPROVED // 인증 완료
+  REJECTED // 반려
+}
+
+// 인증 회원 (임산부 자격 인증 + 회원증)
+model Member {
+  id              String             @id @default(cuid())
+  nickname        String
+  dueDate         DateTime? // 출산예정일
+  proofImage      String? // 증빙 서류(산모수첩 등) 사진, data URL로 저장. 심사(승인/반려) 완료 시 파기(null 처리)
+  status          VerificationStatus @default(PENDING)
+  rejectionReason String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([status])
+}
+
+// 커뮤니티 게시글 카테고리
+enum PostCategory {
+  REVIEW // 혜택/가맹점 후기
+  QUESTION // 질문
+  INFO_SHARE // 정보 공유
+  FREE // 자유
+}
+
+model Post {
+  id        String       @id @default(cuid())
+  category  PostCategory
+  title     String
+  content   String
+  authorName String      @default("익명")
+  likeCount Int          @default(0)
+  viewCount Int          @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  // 영수증 인증 후기 (네이버 영수증 리뷰 방식): 특정 매장 이용을 영수증 사진으로 인증
+  merchant     Merchant? @relation(fields: [merchantId], references: [id])
+  merchantId   String?
+  receiptImage String? // 영수증 사진, data URL로 저장
+  amount       Int? // 결제 금액(원). 정산(수수료·기부금 계산)의 기준이 됨
+
+  comments Comment[]
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  authorName String   @default("익명")
+  createdAt  DateTime @default(now())
+
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+
+  @@index([postId])
+}

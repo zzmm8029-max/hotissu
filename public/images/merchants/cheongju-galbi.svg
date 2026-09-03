@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="sky6" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf0e6"/>
+      <stop offset="1" stop-color="#f6dcc4"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#sky6)"/>
+  <rect x="0" y="330" width="400" height="70" fill="#c9926a"/>
+  <rect x="60" y="220" width="280" height="16" fill="#8a5a34"/>
+  <rect x="80" y="236" width="16" height="70" fill="#8a5a34"/>
+  <rect x="304" y="236" width="16" height="70" fill="#8a5a34"/>
+  <ellipse cx="200" cy="220" rx="130" ry="14" fill="#4a3120"/>
+  <ellipse cx="200" cy="214" rx="120" ry="10" fill="#6b4630"/>
+  <g opacity="0.9">
+    <ellipse cx="150" cy="208" rx="26" ry="14" fill="#c9483a"/>
+    <ellipse cx="200" cy="204" rx="24" ry="13" fill="#b8402f"/>
+    <ellipse cx="250" cy="210" rx="26" ry="14" fill="#c9483a"/>
+  </g>
+  <path d="M130 190 C 128 170, 140 160, 136 140" stroke="#e8dcc9" stroke-width="6" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <path d="M270 190 C 272 168, 258 158, 264 136" stroke="#e8dcc9" stroke-width="6" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <path d="M200 188 C 198 166, 210 156, 204 134" stroke="#e8dcc9" stroke-width="6" fill="none" opacity="0.6" stroke-linecap="round"/>
+  <g transform="translate(90,150)">
+    <rect x="-6" y="0" width="12" height="50" rx="4" fill="#c9926a"/>
+    <path d="M -12 0 L 12 0 L 6 -30 L -6 -30 Z" fill="#e0e0e0"/>
+  </g>
+  <g transform="translate(310,150)">
+    <circle r="30" fill="#fff3e0"/>
+    <path d="M -12 -4 L 12 -4 M -12 6 L 12 6" stroke="#c9926a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
