@@ -2,9 +2,10 @@
 
 import "leaflet/dist/leaflet.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, ImageOverlay, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { MERCHANT_CATEGORY_LABEL, MERCHANT_CATEGORY_PHOTO_FALLBACK } from "@/lib/labels";
+import { schematicBaseMapUrl } from "@/lib/schematicBaseMap";
 import { googleMapsUrl } from "@/lib/geo";
 import type { MerchantCategory } from "@/generated/prisma/enums";
 import type { MerchantMapData } from "./MerchantCard";
@@ -35,13 +36,8 @@ const TILE_SOURCES = [
   },
 ] as const;
 
-// 타일이 하나도 안 뜰 때도 회색 덩어리로 보이지 않도록 깔아두는 배경
-const FALLBACK_BACKGROUND = {
-  backgroundColor: "#eef1f6",
-  backgroundImage:
-    "linear-gradient(rgba(107,79,160,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(107,79,160,.08) 1px, transparent 1px)",
-  backgroundSize: "40px 40px",
-};
+// 약식 지도로도 덮이지 않는 가장자리에 깔리는 바탕색
+const FALLBACK_BACKGROUND = { backgroundColor: "#eceef2" };
 
 // 한두 장 실패는 일시적인 것일 수 있어, 이 횟수를 넘겨야 공급처를 바꾼다
 const TILE_ERROR_THRESHOLD = 4;
@@ -130,6 +126,22 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
     );
   }, []);
 
+  // 약식 지도를 깔 범위. 가맹점 분포보다 넉넉하게 잡아 지도를 끌어도 여백이 드러나지 않게 한다.
+  const schematicBounds = useMemo<L.LatLngBoundsExpression>(() => {
+    const pts = merchants
+      .filter((m) => m.latitude !== null && m.longitude !== null)
+      .map((m) => [m.latitude as number, m.longitude as number] as [number, number]);
+    const b = L.latLngBounds(pts.length > 0 ? pts : [[36.35, 127.8]]);
+    // 가맹점이 한 곳뿐이면 범위가 점 하나라 그대로는 그릴 수 없다
+    const minSpan = 0.04;
+    const latGap = Math.max(minSpan - (b.getNorth() - b.getSouth()), 0) / 2;
+    const lngGap = Math.max(minSpan - (b.getEast() - b.getWest()), 0) / 2;
+    return L.latLngBounds(
+      [b.getSouth() - latGap, b.getWest() - lngGap],
+      [b.getNorth() + latGap, b.getEast() + lngGap],
+    ).pad(1);
+  }, [merchants]);
+
   const initialCenter = useMemo<[number, number]>(() => {
     const withCoords = merchants.filter((m) => m.latitude !== null && m.longitude !== null);
     if (withCoords.length === 0) return [36.35, 127.8];
@@ -141,15 +153,17 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
   // sourceIndex가 마지막을 넘어가면 undefined = 쓸 수 있는 공급처가 없다는 뜻
   const source: (typeof TILE_SOURCES)[number] | undefined = TILE_SOURCES[sourceIndex];
 
+  const usingSchematic = !source;
+
   return (
-    <div className="overflow-hidden rounded-3xl border border-neutral-200">
+    <div className="relative overflow-hidden rounded-3xl border border-neutral-200">
       <MapContainer
         center={initialCenter}
         zoom={11}
         scrollWheelZoom={false}
         style={{ height: "360px", width: "100%", ...FALLBACK_BACKGROUND }}
       >
-        {source && (
+        {source ? (
           <TileLayer
             key={source.name}
             attribution={source.attribution}
@@ -157,6 +171,8 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
             maxZoom={source.maxZoom}
             eventHandlers={{ tileerror: handleTileError, tileload: handleTileLoad }}
           />
+        ) : (
+          <ImageOverlay url={schematicBaseMapUrl()} bounds={schematicBounds} />
         )}
         <FitToMarkers merchants={merchants} userPos={userPos} />
         {userPos && (
@@ -194,10 +210,15 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
             </Marker>
           ))}
       </MapContainer>
-      {!source && !tilesOk && (
-        <p className="bg-neutral-50 px-4 py-2 text-xs text-neutral-500">
-          지도 배경을 불러오지 못했습니다. 가맹점 위치는 그대로 표시됩니다.
-        </p>
+      {usingSchematic && (
+        <>
+          <span className="pointer-events-none absolute right-3 top-3 z-[1000] rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-neutral-500 shadow-sm">
+            약식 지도
+          </span>
+          <p className="bg-neutral-50 px-4 py-2 text-xs text-neutral-500">
+            지도 배경을 불러오지 못해 약식 지도로 표시합니다. 가맹점 위치는 실제 좌표입니다.
+          </p>
+        </>
       )}
     </div>
   );
