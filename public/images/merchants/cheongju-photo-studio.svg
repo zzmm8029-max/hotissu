@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="studiobg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf3f6"/>
+      <stop offset="1" stop-color="#f6dde6"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#studiobg)"/>
+  <path d="M60 60 L340 60 L340 250 C 300 300, 100 300, 60 250 Z" fill="#fff" opacity="0.85"/>
+  <rect x="0" y="320" width="400" height="80" fill="#e6cdd6"/>
+  <g transform="translate(200,206)">
+    <rect x="-84" y="-44" width="168" height="108" rx="16" fill="#4a3f68"/>
+    <rect x="-46" y="-62" width="52" height="22" rx="8" fill="#4a3f68"/>
+    <circle cx="0" cy="10" r="42" fill="#2b2440"/>
+    <circle cx="0" cy="10" r="32" fill="#8a6fc0"/>
+    <circle cx="0" cy="10" r="18" fill="#cbb6ec"/>
+    <circle cx="-9" cy="1" r="6" fill="#fff" opacity="0.85"/>
+    <circle cx="58" cy="-24" r="8" fill="#f5c86a"/>
+  </g>
+  <g transform="translate(88,120)">
+    <circle r="26" fill="#f5c86a" opacity="0.5"/>
+    <circle r="14" fill="#ffe9a8"/>
+  </g>
+  <g transform="translate(316,132)" fill="#e8567a" opacity="0.8">
+    <path d="M0 10 C -14 -6, -26 6, -12 18 L0 30 L12 18 C 26 6, 14 -6, 0 10 Z"/>
+  </g>
+  <g stroke="#c9a6bb" stroke-width="5" stroke-linecap="round">
+    <path d="M132 330 L152 292"/>
+    <path d="M268 330 L248 292"/>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="sky8" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef0fc"/>
+      <stop offset="1" stop-color="#dde1f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#sky8)"/>
+  <rect x="0" y="330" width="400" height="70" fill="#c3c9ef"/>
+  <rect x="60" y="150" width="280" height="180" rx="14" fill="#ffffff"/>
+  <rect x="60" y="150" width="280" height="34" rx="14" fill="#5b63b0"/>
+  <rect x="60" y="172" width="280" height="12" fill="#5b63b0"/>
+  <g transform="translate(140,250)">
+    <rect x="-40" y="-10" width="80" height="60" rx="4" fill="#f2a94a"/>
+    <rect x="-32" y="-40" width="24" height="30" rx="3" fill="#e8607a" transform="rotate(-8 -20 -25)"/>
+    <rect x="4" y="-42" width="24" height="32" rx="3" fill="#6fbf9c" transform="rotate(6 16 -26)"/>
+    <circle cx="-40" cy="18" r="10" fill="#4fae8f"/>
+  </g>
+  <g transform="translate(255,255)">
+    <ellipse cx="0" cy="18" rx="34" ry="8" fill="#d8dcf4"/>
+    <circle r="26" fill="#e8a0b0"/>
+    <circle cx="-16" cy="-18" r="10" fill="#e8a0b0"/>
+    <circle cx="16" cy="-18" r="10" fill="#e8a0b0"/>
+    <circle cx="-8" cy="4" r="3" fill="#4a2e7a"/>
+    <circle cx="8" cy="4" r="3" fill="#4a2e7a"/>
+    <path d="M -8 14 C -4 18, 4 18, 8 14" stroke="#4a2e7a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(200,168)">
+    <circle r="15" fill="#ffffff"/>
+    <path d="M -6 -4 L 6 -4 L 6 4 L 0 8 L -6 4 Z" fill="#5b63b0"/>
+  </g>
+</svg>

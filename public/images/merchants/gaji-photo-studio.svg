@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="skyPS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf3e9"/>
+      <stop offset="1" stop-color="#f2e0c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#skyPS)"/>
+  <rect x="0" y="330" width="400" height="70" fill="#e3c290"/>
+  <rect x="70" y="140" width="260" height="200" rx="14" fill="#ffffff"/>
+  <rect x="70" y="140" width="260" height="34" rx="14" fill="#c98a3a"/>
+  <rect x="70" y="162" width="260" height="12" fill="#c98a3a"/>
+  <g transform="translate(200,255)">
+    <rect x="-55" y="-30" width="110" height="70" rx="10" fill="#f7dfa9"/>
+    <rect x="-15" y="-42" width="30" height="16" rx="4" fill="#f7dfa9"/>
+    <circle r="24" fill="#ffffff" stroke="#c98a3a" stroke-width="6"/>
+    <circle r="10" fill="#c98a3a"/>
+  </g>
+</svg>
