@@ -9,6 +9,43 @@ const prisma = new PrismaClient({ adapter });
 const NOTE =
   "※ 샘플 데이터입니다. 정확한 지원 대상·금액·기간은 정부24, 복지로 또는 관할 지자체 공고를 통해 반드시 다시 확인하세요.";
 
+const won = (n: number) => n.toLocaleString("ko-KR");
+
+/**
+ * 영수증 인증 후기에 붙는 샘플 영수증 이미지.
+ * 실제 서비스에서는 이용자가 찍은 사진이 data URL로 들어오는 자리라, 시드도 같은 형태로 넣는다.
+ */
+function receiptImage(input: {
+  storeName: string;
+  date: string;
+  items: { name: string; price: number }[];
+  total: number;
+}) {
+  const rows = input.items
+    .map(
+      (item, i) =>
+        `<text x="26" y="${188 + i * 30}" font-size="17" fill="#3a3a3a">${item.name}</text>` +
+        `<text x="334" y="${188 + i * 30}" font-size="17" fill="#3a3a3a" text-anchor="end">${won(item.price)}</text>`,
+    )
+    .join("");
+  const totalY = 200 + input.items.length * 30;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 ${totalY + 128}" font-family="sans-serif">
+  <rect width="360" height="${totalY + 128}" fill="#fffdf7"/>
+  <rect x="8" y="8" width="344" height="${totalY + 112}" fill="#fff" stroke="#e5ddd0"/>
+  <text x="180" y="58" font-size="21" font-weight="700" fill="#2b2440" text-anchor="middle">${input.storeName}</text>
+  <text x="180" y="86" font-size="15" fill="#8a8172" text-anchor="middle">${input.date}</text>
+  <path d="M26 112 H334" stroke="#d9d0c0" stroke-dasharray="5 5"/>
+  <text x="26" y="146" font-size="15" fill="#8a8172">영수증 (샘플)</text>
+  ${rows}
+  <path d="M26 ${totalY - 24} H334" stroke="#d9d0c0" stroke-dasharray="5 5"/>
+  <text x="26" y="${totalY + 8}" font-size="19" font-weight="700" fill="#2b2440">합계</text>
+  <text x="334" y="${totalY + 8}" font-size="19" font-weight="700" fill="#2b2440" text-anchor="end">${won(input.total)}원</text>
+  <rect x="26" y="${totalY + 30}" width="180" height="34" rx="17" fill="#efe8fb"/>
+  <text x="116" y="${totalY + 53}" font-size="15" font-weight="700" fill="#4a2e7a" text-anchor="middle">가지 회원증 제시</text>
+</svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 async function main() {
   await prisma.comment.deleteMany();
   await prisma.post.deleteMany();
@@ -215,7 +252,7 @@ async function main() {
     ],
   });
 
-  await prisma.merchant.createMany({
+  const merchants = await prisma.merchant.createManyAndReturn({
     data: [
       {
         name: "가지 내과",
@@ -412,8 +449,88 @@ async function main() {
         longitude: 127.0257,
         photoUrl: "/images/merchants/gaji-photo-studio.svg",
       },
+      {
+        name: "청주 늘봄 소아과의원",
+        category: "HOSPITAL",
+        description: "평일 야간·주말 오전 진료를 운영하는 소아과",
+        benefitInfo:
+          "평일 야간(18~21시), 토·일 오전 진료\n가지 회원증 제시 시 예방접종 상담 우선 안내\n다자녀 가정 형제 동반 진료 시 대기 없이 연속 진료",
+        address: "충청북도 청주시 흥덕구 강서로 120",
+        region: "충청북도",
+        district: "청주시 흥덕구",
+        latitude: 36.6318,
+        longitude: 127.4285,
+        photoUrl: "/images/merchants/cheongju-pediatrics.svg",
+      },
+      {
+        name: "청주 한아름 마트",
+        category: "MART",
+        description: "기저귀·분유·아동복을 함께 취급하는 동네 마트",
+        benefitInfo:
+          "가지 회원증 제시 시 기저귀·분유 5% 할인\n매월 첫째 주 아동복 코너 10% 할인\n임산부 전용 주차구역 운영",
+        address: "충청북도 청주시 서원구 사직대로 200",
+        region: "충청북도",
+        district: "청주시 서원구",
+        latitude: 36.6318,
+        longitude: 127.467,
+        photoUrl: "/images/merchants/cheongju-mart.svg",
+      },
+      {
+        name: "청주 반달 사진관",
+        category: "ETC",
+        description: "만삭·50일·돌 기념사진 촬영",
+        benefitInfo:
+          "가지 회원증 제시 시 돌 사진 패키지 10% 할인\n만삭 촬영 예약 시 액자 1개 무료 제공",
+        address: "충청북도 청주시 상당구 무심동로 380",
+        region: "충청북도",
+        district: "청주시 상당구",
+        latitude: 36.6415,
+        longitude: 127.4855,
+        photoUrl: "/images/merchants/cheongju-photo-studio.svg",
+      },
+      {
+        name: "청주 소울 헤어",
+        category: "BEAUTY",
+        description: "임산부 저자극 시술이 가능한 미용실",
+        benefitInfo:
+          "가지 회원증 제시 시 커트·클리닉 10% 할인\n임산부 저자극 약제 상담 무료\n아이 동반 시 놀이 매트·대기 공간 제공",
+        address: "충청북도 청주시 흥덕구 대농로 45",
+        region: "충청북도",
+        district: "청주시 흥덕구",
+        latitude: 36.6435,
+        longitude: 127.434,
+        photoUrl: "/images/merchants/cheongju-hair.svg",
+      },
+      {
+        name: "청주 아이놀이 문화센터",
+        category: "EDUCATION",
+        description: "영유아 공연·놀이 프로그램 운영",
+        benefitInfo:
+          "가지 회원증 제시 시 어린이 공연 관람권 20% 할인\n다자녀 가정 두 번째 아동부터 프로그램 등록비 면제",
+        address: "충청북도 청주시 청원구 율량로 88",
+        region: "충청북도",
+        district: "청주시 청원구",
+        latitude: 36.6712,
+        longitude: 127.4885,
+        photoUrl: "/images/merchants/cheongju-culture-center.svg",
+      },
+      {
+        name: "청주 든든 분식",
+        category: "CAFE_RESTAURANT",
+        description: "아이 의자·유아 식기를 갖춘 동네 분식집",
+        benefitInfo:
+          "가지 회원증 제시 시 2인 이상 주문하면 어린이 메뉴 1개 무료\n유아 식기·아이 의자 상시 비치",
+        address: "충청북도 청주시 청원구 내수로 25",
+        region: "충청북도",
+        district: "청주시 청원구",
+        latitude: 36.6598,
+        longitude: 127.4762,
+        photoUrl: "/images/merchants/cheongju-bunsik.svg",
+      },
     ],
   });
+
+  const merchantByName = (name: string) => merchants.find((m) => m.name === name)!;
 
   await prisma.post.createMany({
     data: [
@@ -436,6 +553,62 @@ async function main() {
         title: "임산부 배지는 어디서 받나요?",
         content: "다음 주에 첫 검진 가는데 임산부 배지는 보건소 가면 바로 주나요, 아니면 미리 신청해야 하나요?",
         authorName: "예비맘23",
+      },
+      {
+        category: "REVIEW",
+        title: "말 안 꺼내도 회원증 보고 먼저 사이즈업 해주셨어요",
+        content:
+          "그동안 스티커 붙은 가게를 가도 제가 먼저 물어보기가 눈치 보여서 그냥 나온 적이 많았는데요.\n여기는 회원증 화면 보여드리니까 사장님이 바로 확인 눌러주시고 사이즈업 해주셨어요. 말을 꺼낼 필요가 없어서 그게 제일 좋았습니다.\n영수증 올려둘게요. 만삭이라 멀리 못 가시는 분들 참고하세요.",
+        authorName: "청주새댁",
+        merchantId: merchantByName("가지 동네 카페 청주점").id,
+        amount: 5500,
+        receiptImage: receiptImage({
+          storeName: "가지 동네 카페 청주점",
+          date: "2026-09-12 10:24",
+          items: [
+            { name: "디카페인 라떼 (L)", price: 5500 },
+            { name: "사이즈업 할인", price: 0 },
+          ],
+          total: 5500,
+        }),
+      },
+      {
+        category: "REVIEW",
+        title: "둘째 낳고 처음 외식했는데 300g 서비스 진짜 나왔습니다",
+        content:
+          "혜택 있다고 적혀 있어도 막상 가면 안 되는 경우가 있어서 반신반의했는데요.\n회원증 보여드리니 사장님이 앱에서 확인 눌러주시고 고기 300g 그대로 챙겨주셨습니다. 아이 의자도 먼저 가져다주셨어요.\n다음에 또 가면 재방문 할인이 올라간다고 해서 그것도 기대 중입니다.",
+        authorName: "두아이아빠",
+        merchantId: merchantByName("청주 가지 고기집").id,
+        amount: 48000,
+        receiptImage: receiptImage({
+          storeName: "청주 가지 고기집",
+          date: "2026-09-13 19:05",
+          items: [
+            { name: "삼겹살 2인분", price: 36000 },
+            { name: "된장찌개", price: 8000 },
+            { name: "음료 2", price: 4000 },
+            { name: "가지 회원 300g 서비스", price: 0 },
+          ],
+          total: 48000,
+        }),
+      },
+      {
+        category: "REVIEW",
+        title: "장난감 대여 신청비 면제받았어요 (개월수 상담까지)",
+        content:
+          "18개월 아이라 뭘 빌려야 할지 몰라서 갔는데, 개월수 맞춰서 추천해 주시고 신청비는 회원증 보여드리니 면제해 주셨습니다.\n큰아이 것까지 같이 등록하면 둘째 대여료가 할인된다고 해서 다음 달에 같이 하려고요.\n영수증 첨부합니다.",
+        authorName: "무럭무럭맘",
+        merchantId: merchantByName("청주 무럭무럭 장난감 대여점").id,
+        amount: 30000,
+        receiptImage: receiptImage({
+          storeName: "청주 무럭무럭 장난감 대여점",
+          date: "2026-09-10 15:40",
+          items: [
+            { name: "정기 대여 1개월", price: 30000 },
+            { name: "신청비 (회원증 면제)", price: 0 },
+          ],
+          total: 30000,
+        }),
       },
     ],
   });

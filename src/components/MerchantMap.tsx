@@ -93,9 +93,12 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
         scrollWheelZoom={false}
         style={{ height: "360px", width: "100%" }}
       >
+        {/* OSM은 a/b/c 서브도메인({s})을 더 이상 제공하지 않는다. 서브도메인 형태로 요청하면
+            타일이 통째로 로드되지 않아 지도가 회색으로만 보인다. 공식 단일 호스트를 쓴다. */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maxZoom={19}
         />
         <FitToMarkers merchants={merchants} userPos={userPos} />
         {userPos && (
