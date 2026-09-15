@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { MerchantCategory } from "@/generated/prisma/enums";
 import { MERCHANT_CATEGORY_FILTER_ORDER, MERCHANT_CATEGORY_LABEL } from "@/lib/labels";
-import { LOCAL_GOV_DISCLAIMER } from "@/lib/constants";
 import MerchantCard from "@/components/MerchantCard";
 import MerchantMap from "@/components/MerchantMapLoader";
 
@@ -55,10 +54,6 @@ export default async function MerchantsPage({
       <h1 className="text-2xl font-bold text-neutral-900">가지가맹점</h1>
       <p className="mt-2 text-sm text-neutral-600">
         임산부 배려석, 전용 주차장, 유아 휴게실(기저귀 교환대) 등을 갖춘 가맹점·시설을 찾아보세요.
-      </p>
-
-      <p className="mt-4 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-xs leading-relaxed text-neutral-500">
-        {LOCAL_GOV_DISCLAIMER}
       </p>
 
       <p className="mt-6 text-sm text-neutral-500">
