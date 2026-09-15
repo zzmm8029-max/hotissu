@@ -1,13 +1,50 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { MERCHANT_CATEGORY_LABEL, MERCHANT_CATEGORY_PHOTO_FALLBACK } from "@/lib/labels";
 import { googleMapsUrl } from "@/lib/geo";
 import type { MerchantCategory } from "@/generated/prisma/enums";
 import type { MerchantMapData } from "./MerchantCard";
+
+/**
+ * 지도 배경(타일) 공급처.
+ *
+ * OSM 공식 타일 서버(tile.openstreetmap.org)는 이용 정책상 Referer 또는 User-Agent로 호출
+ * 주체를 식별할 수 있어야 하고, 식별되지 않으면 오류 타일을 돌려준다. 브라우저 설정·확장
+ * 프로그램·Referrer-Policy 때문에 Referer가 빠지는 경우가 있어 서비스 배경으로 쓰기에는
+ * 불안정하다. 그래서 키 없이 쓸 수 있고 임베드를 전제로 운영되는 CARTO를 기본으로 두고,
+ * 실패하면 OSM으로 넘어가고, 둘 다 실패하면 배경 없이 핀만 남긴다(FALLBACK_BACKGROUND).
+ */
+const TILE_SOURCES = [
+  {
+    name: "carto",
+    url: "https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    maxZoom: 20,
+  },
+  {
+    name: "osm",
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+  },
+] as const;
+
+// 타일이 하나도 안 뜰 때도 회색 덩어리로 보이지 않도록 깔아두는 배경
+const FALLBACK_BACKGROUND = {
+  backgroundColor: "#eef1f6",
+  backgroundImage:
+    "linear-gradient(rgba(107,79,160,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(107,79,160,.08) 1px, transparent 1px)",
+  backgroundSize: "40px 40px",
+};
+
+// 한두 장 실패는 일시적인 것일 수 있어, 이 횟수를 넘겨야 공급처를 바꾼다
+const TILE_ERROR_THRESHOLD = 4;
 
 // 카테고리별 이모지 핀 (카드 UI의 MERCHANT_CATEGORY_PHOTO_FALLBACK과 동일한 이모지 사용)
 const categoryPinIconCache = new Map<MerchantCategory, L.DivIcon>();
@@ -67,6 +104,22 @@ function FitToMarkers({
 
 export default function MerchantMap({ merchants }: { merchants: MerchantMapData[] }) {
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const [tilesOk, setTilesOk] = useState(false);
+  const errorCount = useRef(0);
+
+  const handleTileLoad = useCallback(() => {
+    errorCount.current = 0;
+    setTilesOk(true);
+  }, []);
+
+  // 현재 공급처가 계속 실패하면 다음 공급처로 넘어간다. 마지막까지 실패하면 배경 없이 둔다.
+  const handleTileError = useCallback(() => {
+    errorCount.current += 1;
+    if (errorCount.current < TILE_ERROR_THRESHOLD) return;
+    errorCount.current = 0;
+    setSourceIndex((i) => i + 1);
+  }, []);
 
   useEffect(() => {
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
@@ -85,21 +138,26 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
     return [lat, lng];
   }, [merchants]);
 
+  // sourceIndex가 마지막을 넘어가면 undefined = 쓸 수 있는 공급처가 없다는 뜻
+  const source: (typeof TILE_SOURCES)[number] | undefined = TILE_SOURCES[sourceIndex];
+
   return (
     <div className="overflow-hidden rounded-3xl border border-neutral-200">
       <MapContainer
         center={initialCenter}
         zoom={11}
         scrollWheelZoom={false}
-        style={{ height: "360px", width: "100%" }}
+        style={{ height: "360px", width: "100%", ...FALLBACK_BACKGROUND }}
       >
-        {/* OSM은 a/b/c 서브도메인({s})을 더 이상 제공하지 않는다. 서브도메인 형태로 요청하면
-            타일이 통째로 로드되지 않아 지도가 회색으로만 보인다. 공식 단일 호스트를 쓴다. */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          maxZoom={19}
-        />
+        {source && (
+          <TileLayer
+            key={source.name}
+            attribution={source.attribution}
+            url={source.url}
+            maxZoom={source.maxZoom}
+            eventHandlers={{ tileerror: handleTileError, tileload: handleTileLoad }}
+          />
+        )}
         <FitToMarkers merchants={merchants} userPos={userPos} />
         {userPos && (
           <Marker position={userPos} icon={mePinIcon}>
@@ -136,6 +194,11 @@ export default function MerchantMap({ merchants }: { merchants: MerchantMapData[
             </Marker>
           ))}
       </MapContainer>
+      {!source && !tilesOk && (
+        <p className="bg-neutral-50 px-4 py-2 text-xs text-neutral-500">
+          지도 배경을 불러오지 못했습니다. 가맹점 위치는 그대로 표시됩니다.
+        </p>
+      )}
     </div>
   );
 }

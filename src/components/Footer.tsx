@@ -1,4 +1,4 @@
-import { SITE_NAME } from "@/lib/constants";
+import { LOCAL_GOV_DISCLAIMER, SITE_NAME } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -9,6 +9,7 @@ export default function Footer() {
           본 서비스에 게재된 혜택·정책 정보는 참고용이며, 정확한 지원 대상·금액·기간은
           정부24, 복지로 또는 관할 지자체 공고를 통해 반드시 다시 확인하시기 바랍니다.
         </p>
+        <p className="mt-2">{LOCAL_GOV_DISCLAIMER}</p>
         <p className="mt-1">© {new Date().getFullYear()} {SITE_NAME}</p>
       </div>
     </footer>
